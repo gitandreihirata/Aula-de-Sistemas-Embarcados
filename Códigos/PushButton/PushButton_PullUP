@@ -1,0 +1,39 @@
+/*
+O modo resistor pull-up: 
+Funciona como NF, portanto, o circuito esta normalmente fechado,
+mandando sinal HIGH (1) para o Arduino. No momento em que
+for pressionado manda um sinal LOW (0).
+
+O modo resistor pull-down: Funciona como NA, sendo assim,
+só ira mandar um sinal lógico HIGH (1) para o Arduino, 
+enquanto pressionado, permitindo assim passagem de corrente.
+
+A função INPUT_PULLUP faz com que o Arduino use seu resistor 
+interno, no modo pull-up.
+*/
+
+//Pino do botão
+int pinPushButton = 2;
+//Pino do led
+int pinLed = 13;
+//estado do led
+bool estadoLed = 0;
+  
+void setup()
+{
+  pinMode(pinPushButton, INPUT_PULLUP);
+  pinMode(pinLed, OUTPUT);
+}
+
+void loop()
+{
+  //Se botão for pressionado
+  if(digitalRead(pinPushButton) == LOW)
+  {
+  	estadoLed = !estadoLed; // troca estado
+    digitalWrite(pinLed, estadoLed);
+    
+    while (digitalRead(pinPushButton) == LOW);
+    delay(100);
+  }
+}
